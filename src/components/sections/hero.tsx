@@ -123,7 +123,7 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Image / Visual */}
+            {/* Right: Image / Visual */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -133,10 +133,12 @@ export function HeroSection() {
             <div className="relative">
               {/* Glowing frame */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-secondary to-accent p-[2px] opacity-75 blur-sm" />
-              <div className="relative flex h-72 w-72 items-center justify-center rounded-full bg-muted sm:h-80 sm:w-80">
-                <span className="text-6xl font-bold text-muted-foreground/30">
-                  NM
-                </span>
+              <div className="relative h-72 w-72 overflow-hidden rounded-full bg-muted sm:h-80 sm:w-80">
+                <img
+                  src="/images/profile/profile.jpeg"
+                  alt="Nithish M"
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
           </motion.div>

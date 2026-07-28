@@ -1,8 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { SITE_CONFIG, NAV_LINKS, SOCIAL_LINKS } from "@/lib/constants";
 import { MagneticButton } from "@/components/shared/magnetic-button";
+import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
 
 export function Footer() {
   const router = useRouter();
@@ -39,17 +42,25 @@ export function Footer() {
               {SITE_CONFIG.description}
             </p>
             <div className="flex gap-3">
-              {SOCIAL_LINKS.map((link) => (
-                <a
+              {SOCIAL_LINKS.map((link, index) => (
+                <motion.a
                   key={link.name}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-10 w-10 items-center justify-center rounded-full glass text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
                   aria-label={link.name}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  <span className="text-sm font-medium">{link.name[0]}</span>
-                </a>
+                  {link.name === "GitHub" && <FaGithub className="h-5 w-5" />}
+                  {link.name === "LinkedIn" && <FaLinkedin className="h-5 w-5" />}
+                  {link.name === "Instagram" && <FaInstagram className="h-5 w-5" />}
+                  {link.name === "LeetCode" && <SiLeetcode className="h-5 w-5" />}
+                </motion.a>
               ))}
             </div>
           </div>

@@ -1,15 +1,23 @@
 "use client";
 
-"use client";
-
+import { useRouter, usePathname } from "next/navigation";
 import { SITE_CONFIG, NAV_LINKS, SOCIAL_LINKS } from "@/lib/constants";
 import { MagneticButton } from "@/components/shared/magnetic-button";
 
 export function Footer() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handleClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (pathname !== "/") {
+      // Navigate to home page with hash
+      window.location.href = `/${href}`;
+    } else {
+      // We're on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -19,9 +27,14 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-3">
           {/* Brand */}
           <div className="space-y-4">
-            <a href="#hero" onClick={(e) => { e.preventDefault(); handleClick("#hero"); }} className="text-2xl font-bold tracking-tight">
+            <button
+              onClick={() => {
+                window.location.href = "/";
+              }}
+              className="text-2xl font-bold tracking-tight"
+            >
               <span className="gradient-text">NM</span>
-            </a>
+            </button>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               {SITE_CONFIG.description}
             </p>

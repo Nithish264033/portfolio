@@ -1,13 +1,14 @@
 "use client";
 
-"use client";
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 
 export function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -46,9 +47,16 @@ export function Navbar() {
 
   const handleClick = (href: string) => {
     setMobileOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    
+    if (pathname !== "/") {
+      // Navigate to home page with hash
+      window.location.href = `/${href}`;
+    } else {
+      // We're on home page, just scroll
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -63,38 +71,42 @@ export function Navbar() {
     >
       <nav className="container-custom flex h-16 items-center justify-between md:h-20">
         {/* Logo */}
-        <a
-          href="#hero"
-          onClick={(e) => { e.preventDefault(); handleClick("#hero"); }}
+        <button
+          onClick={() => {
+            window.location.href = "/";
+          }}
           className="relative z-10 text-xl font-bold tracking-tight"
         >
           <span className="gradient-text">NM</span>
           <span className="sr-only">Nithish M</span>
-        </a>
+        </button>
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleClick(link.href)}
-              className={cn(
-                "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                activeSection === link.href.replace("#", "")
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {link.label}
-              {activeSection === link.href.replace("#", "") && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute inset-0 rounded-full bg-primary/10"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const section = link.href.replace("#", "");
+            return (
+              <button
+                key={link.href}
+                onClick={() => handleClick(link.href)}
+                className={cn(
+                  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  activeSection === section
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {link.label}
+                {activeSection === section && (
+                  <motion.div
+                    layoutId="activeSection"
+                    className="absolute inset-0 rounded-full bg-primary/10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Mobile Menu Button */}

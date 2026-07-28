@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
   phone: "+91 6381884014",
   location: "Nagapattinam, Tamil Nadu, India",
   timezone: "IST (UTC+05:30)",
-  resumeUrl: "/images/resume/Nithish_M_Resume.pdf",
+  resumeUrl: "/images/resume/resume.pdf",
   copyright: `© ${new Date().getFullYear()} Nithish M. All rights reserved.`,
   builtWith: "Built with Next.js · TypeScript · Tailwind CSS",
 };
@@ -18,6 +18,7 @@ export const SITE_CONFIG = {
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
+  { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Achievements", href: "#achievements" },
